@@ -371,22 +371,12 @@ static YYSTACKDATA yystack;
 #line 108 "yacc_file.y"
 extern FILE *yyin; 
 extern int yylineno;
+extern FILE *yyout;
 void yyerror(const char * p){
 	printf("\nError : %s at line %d \n",p,yylineno);
 }
 
-main(){
-	FILE *myfile = fopen("test.php", "r");
-	yyin = myfile;
-	if(!yyparse()){
-		printf("\nParsed Successfully\n");
-	}
-	else printf("\nParsing Unsuccessful\n");
-	return 0;
-
-	
-}
-#line 388 "y.tab.c"
+#line 378 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -592,7 +582,7 @@ case 1:
 #line 9 "yacc_file.y"
 	{printf("valid\n");YYACCEPT;}
 break;
-#line 594 "y.tab.c"
+#line 584 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

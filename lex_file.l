@@ -4,10 +4,11 @@
 %}
 %option yylineno
 
+
 %%
-"/*"([^*]|\*+[^*/])*\*+"/" 		 ;
-"//".* 		;
-"#".* 		;
+"/*"([^*]|\*+[^*/])*\*+"/" 		{fprintf(yyout,"c");}
+"//".* 		{fprintf(yyout,"c");}
+"#".* 		{fprintf(yyout,"c");}
 "<?php"    return START;
 "?>"		return END;
 "int"           return TYPE;
@@ -63,3 +64,20 @@
             yyerror("Invalid Character");
             return *yytext;
         }
+
+%%
+
+main(){
+	fprintf(yyout,"");
+	FILE *myfile = fopen("test.php", "r");
+	yyout=fopen("op.php","w");
+	yyin = myfile;
+	if(!yyparse()){
+		yylex();
+		printf("\nParsed Successfully\n");
+	}
+	else printf("\nParsing Unsuccessful\n");
+	return 0;
+
+	
+}

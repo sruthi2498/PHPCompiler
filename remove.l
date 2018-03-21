@@ -1,7 +1,6 @@
 %{
 	int count=0;
 	int line_no = 0;
-	int yylineno = 0;
 	// \/\/.* ;
 
 %}
