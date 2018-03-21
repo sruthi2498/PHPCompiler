@@ -44,3 +44,5 @@
 #define SINGLE 300
 #define LETTER 301
 #define STRING 302
+#define MULTI 303
+#define HASH 304

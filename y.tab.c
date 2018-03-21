@@ -103,6 +103,8 @@ extern int YYPARSE_DECL();
 #define SINGLE 300
 #define LETTER 301
 #define STRING 302
+#define MULTI 303
+#define HASH 304
 #define YYERRCODE 256
 static const short yylhs[] = {                           -1,
     0,    1,    3,    2,    2,    2,    2,    2,    2,    2,
@@ -241,7 +243,7 @@ static const short yycheck[] = {                          6,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 302
+#define YYMAXTOKEN 304
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? (YYMAXTOKEN + 1) : (a))
 #if YYDEBUG
 static const char *yyname[] = {
@@ -257,7 +259,7 @@ static const char *yyname[] = {
 "MINUS_EQ","STAR_EQ","BY_EQ","PLUS_PLUS","MINUS_MINUS","OPEN_SQ","CLOSE_SQ",
 "OPEN_B","CLOSE_B","IF","ELSE","ELSEIF","WHILE","FOR","CONTINUE","BREAK",
 "RETURN","LT","GT","LTE","GTE","EQ_TO","NOT_EQ_TO","OR","AND","ECHO","DOT",
-"DOUBLE","SINGLE","LETTER","STRING","illegal-symbol",
+"DOUBLE","SINGLE","LETTER","STRING","MULTI","HASH","illegal-symbol",
 };
 static const char *yyrule[] = {
 "$accept : P",
@@ -382,8 +384,9 @@ main(){
 	else printf("\nParsing Unsuccessful\n");
 	return 0;
 
+	
 }
-#line 385 "y.tab.c"
+#line 388 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -589,7 +592,7 @@ case 1:
 #line 9 "yacc_file.y"
 	{printf("valid\n");YYACCEPT;}
 break;
-#line 591 "y.tab.c"
+#line 594 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
