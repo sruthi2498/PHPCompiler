@@ -2,6 +2,7 @@
     #include "y.tab.h"
     void yyerror(const char *);
 %}
+%option yylineno
 %%
 "<?php"    return START;
 "?>"		return END;

@@ -368,9 +368,11 @@ typedef struct {
 static YYSTACKDATA yystack;
 #line 108 "yacc_file.y"
 extern FILE *yyin; 
+extern int yylineno;
 void yyerror(const char * p){
-	printf("\nError : %s\n",p);
+	printf("\nError : %s at line %d \n",p,yylineno);
 }
+
 main(){
 	FILE *myfile = fopen("test.php", "r");
 	yyin = myfile;
@@ -381,7 +383,7 @@ main(){
 	return 0;
 
 }
-#line 383 "y.tab.c"
+#line 385 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -587,7 +589,7 @@ case 1:
 #line 9 "yacc_file.y"
 	{printf("valid\n");YYACCEPT;}
 break;
-#line 589 "y.tab.c"
+#line 591 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
