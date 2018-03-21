@@ -36,7 +36,7 @@ not_new_line 	[^'\n']
 			}
 %%
 int main(){
-//fprintf(yyout,"");
+fprintf(yyout,"");
 	printf("\nRemoving comments ...\n");
 	yyin=fopen("ip.php","r");
 	yyout=fopen("op.php","w");

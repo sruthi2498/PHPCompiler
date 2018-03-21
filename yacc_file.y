@@ -49,13 +49,9 @@ echo_stmt 	: ECHO E SEMIC
 			| ECHO ConcatenatedText SEMIC
 			| ECHO OPEN ConcatenatedText CLOSE SEMIC
 			;
-ConcatenatedText : ConcatenatedText DOT Text
-				| Text 
+ConcatenatedText : ConcatenatedText DOT STRING
+				| STRING 
 				;
-Text :  DOUBLE STRING DOUBLE 
-	| SINGLE STRING SINGLE
-	;
-
 cond 		:  expr 
 			| expr logOp expr
 			;
@@ -113,7 +109,7 @@ extern FILE *yyin;
 void yyerror(const char * p){
 	printf("\nError : %s\n",p);
 }
-int main(){
+main(){
 	FILE *myfile = fopen("test.php", "r");
 	yyin = myfile;
 	if(!yyparse()){
@@ -122,5 +118,4 @@ int main(){
 	else printf("\nParsing Unsuccessful\n");
 	return 0;
 
-	
 }

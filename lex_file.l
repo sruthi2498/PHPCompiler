@@ -52,11 +52,10 @@
 "$"[a-zA-Z][a-zA-Z0-9_]*    return ID;
 [0-9]+       		return NUM;
 [a-zA-Z]			return LETTER;
-[a-zA-Z0-9][a-zA-Z0-9 \t]*		return STRING;
+\"[a-zA-Z0-9][a-zA-Z0-9 \t]*\"		return STRING;
+\'[a-zA-Z0-9][a-zA-Z0-9 \t]*\'		return STRING;
+
 .            {
             yyerror("Invalid Character");
             return *yytext;
         }
-
-
-
