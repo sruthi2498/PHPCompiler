@@ -1,5 +1,5 @@
 #!/bin/bash
-make MakeFinal.mk
+make -f MakeFinal.mk
 ./main
-make MakeComm.mk
+make -f MakeComm.mk
 ./prepCode
