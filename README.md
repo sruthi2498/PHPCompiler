@@ -2,8 +2,8 @@
 
 # To run :
 
-    $ make
-    $ ./main
+    $ chmod 777 parse.sh
+    $ ./parse.sh
 
 # Files:
 
