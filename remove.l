@@ -1,7 +1,6 @@
 %{
 	int count=0;
 	int line_no = 0;
-	int yylineno = 0;
 	// \/\/.* ;
 
 %}
@@ -18,9 +17,6 @@ multi		{forward}{star}({space}|{tab}|{not_star}|{star}{not_forward}|{line})*{sta
 string_literal  \".*\"
 not_new_line 	[^'\n']
 %%
-{line}			{yylineno++;
-			 fprintf(yyout,"");
-			}
 {single}		{count++; 
 				fprintf(yyout,"");
 			}
@@ -32,13 +28,11 @@ not_new_line 	[^'\n']
 			}
 {string_literal}	{fprintf(yyout,"%s", yytext);
 			}	
-{tab}|{space}		{fprintf(yyout,"");
-			}
 %%
 int main(){
-//fprintf(yyout,"");
+fprintf(yyout,"");
 	printf("\nRemoving comments ...\n");
-	yyin=fopen("ip.php","r");
+	yyin=fopen("test.php","r");
 	yyout=fopen("op.php","w");
 	yylex();
 	printf("\nNumber of comments : %d\n",count);

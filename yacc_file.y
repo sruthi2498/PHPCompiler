@@ -49,13 +49,9 @@ echo_stmt 	: ECHO E SEMIC
 			| ECHO ConcatenatedText SEMIC
 			| ECHO OPEN ConcatenatedText CLOSE SEMIC
 			;
-ConcatenatedText : ConcatenatedText DOT Text
-				| Text 
+ConcatenatedText : ConcatenatedText DOT STRING
+				| STRING 
 				;
-Text :  DOUBLE STRING DOUBLE 
-	| SINGLE STRING SINGLE
-	;
-
 cond 		:  expr 
 			| expr logOp expr
 			;
@@ -110,10 +106,13 @@ UnaryE 	: PLUS_PLUS ID
 		;
 %%
 extern FILE *yyin; 
+extern int yylineno;
+extern FILE *yyout;
 void yyerror(const char * p){
-	printf("\nError : %s\n",p);
+	printf("\nError : %s at line %d \n",p,yylineno);
 }
-int main(){
+
+main(){
 	FILE *myfile = fopen("test.php", "r");
 	yyin = myfile;
 	if(!yyparse()){
