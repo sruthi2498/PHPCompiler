@@ -112,3 +112,14 @@ void yyerror(const char * p){
 	printf("\nError : %s at line %d \n",p,yylineno);
 }
 
+main(){
+	FILE *myfile = fopen("test.php", "r");
+	yyin = myfile;
+	if(!yyparse()){
+		printf("\nParsed Successfully\n");
+	}
+	else printf("\nParsing Unsuccessful\n");
+	return 0;
+
+	
+}

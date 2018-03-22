@@ -6,9 +6,9 @@
 
 
 %%
-"/*"([^*]|\*+[^*/])*\*+"/" 		{fprintf(yyout,"c");}
-"//".* 		{fprintf(yyout,"c");}
-"#".* 		{fprintf(yyout,"c");}
+"/*"([^*]|\*+[^*/])*\*+"/" 		;
+"//".* 		;
+"#".* 		;
 "<?php"    return START;
 "?>"		return END;
 "int"           return TYPE;
