@@ -1,13 +1,35 @@
 <?php  	
-	echo $a;
-	if($r < 4){
-		$a = 3;
+
+	
+	
+	$a=3;
+	$b=4;
+	$c=2;
+
+	if($a>$b || $a==$b){
+	   echo "ok";
+	}
+	else if($c==2){
+	  echo "ok";
+	}
+	else{
+		echo "not ok"; 
 	}
 	
-	if($we < 4){
+	
 		
-		$as = 42;
 		
+		
+	for($a=1,$b=3;$a<3;$b=$b+1,$a=$a+2,$c++){
+		if($r < 4){
+			$a = 3;
+		}
 	}
+	
+	echo "abc";
+	
+	echo "aaa"."bbb";
+	
+	echo "aaa".$abc+$bcd;
 
 ?>
