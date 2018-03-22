@@ -47,7 +47,7 @@
 "for"         		return FOR;
 "if"        		return IF;
 "else"         		return ELSE;
-"elseif"      		return ELSEIF;
+"else if"      		return ELSEIF;
 "continue"     		return CONTINUE;
 "break"        		return BREAK;
 "return"    		return RETURN;

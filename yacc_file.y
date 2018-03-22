@@ -32,24 +32,26 @@ iteration_stmt  : FOR OPEN ForAssignExpr SEMIC cond SEMIC UnaryE CLOSE compound_
 				;
 
 iteration_stmt 	: FOR OPEN MultipleAssignExpr SEMIC MultipleForcond SEMIC MultipleAssignExpr CLOSE compound_stmt 
-				| FOR OPEN MultipleAssignExpr SEMIC MultipleForcond SEMIC MultipleUnaryExpr CLOSE compound_stmt 
 				;
-MultipleAssignExpr :  MultipleAssignExpr  COMMA ForAssignExpr 
-					| ForAssignExpr 
+MultipleAssignExpr  : 	ForAssignExpr MAE
+					| UnaryE MAE
 					;
-					
-MultipleForcond : MultipleForcond COMMA cond
-				| cond
+MAE : COMMA ForAssignExpr MAE
+	| COMMA UnaryE MAE
+	|
+	;			
+MultipleForcond : cond MFC
 				;
-MultipleUnaryExpr : MultipleUnaryExpr COMMA UnaryE 
-					|UnaryE 
-					;
-
+MFC : COMMA cond MFC
+	|
+	;
 echo_stmt 	: ECHO E SEMIC
 			| ECHO ConcatenatedText SEMIC
 			| ECHO OPEN ConcatenatedText CLOSE SEMIC
 			;
 ConcatenatedText : ConcatenatedText DOT STRING
+				| ConcatenatedText DOT E
+				| E	
 				| STRING 
 				;
 cond 		:  expr 
@@ -112,7 +114,7 @@ void yyerror(const char * p){
 	printf("\nError : %s at line %d \n",p,yylineno);
 }
 
-main(){
+int main(){
 	FILE *myfile = fopen("test.php", "r");
 	yyin = myfile;
 	if(!yyparse()){
