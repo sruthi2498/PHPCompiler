@@ -1,5 +1,6 @@
 %{
 	#include<stdio.h>
+        #include "cd_hash.h"
 	void yyerror(const char *);
 	int yylex();
 %}
@@ -121,6 +122,9 @@ int main(){
 		printf("\nParsed Successfully\n");
 	}
 	else printf("\nParsing Unsuccessful\n");
+        printf("\n\n#################SYMBOL TABLE#########################\n\n\n");
+        display();
+        printf("\n\n######################################################\n\n\n");
 	return 0;
 
 	
