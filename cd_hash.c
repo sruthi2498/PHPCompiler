@@ -1,19 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-#define SIZE 20
-
-struct node {
-   char* data;   
-   int key;
-};
-
-struct node* hashArray[SIZE]; 
-struct node* dummyItem;
-struct node* item;
-
+#include "cd_hash.h"
 
 
 int hashCode(int key) {
@@ -40,19 +25,22 @@ struct node *search(int key) {
    return NULL;        
 }
 
-void insert(int key,char* data) {
+void insert(int key,char* matchedStr,char* data) {
 
    struct node *item = (struct node*) malloc(sizeof(struct node));
    item->data = (char*)malloc(sizeof(char)*strlen(data)); 
    strcpy(item->data,data); 
    item->key = key;
-
+   item->matchedStr = (char*)malloc(sizeof(char)*strlen(matchedStr)); 
+   strcpy(item->matchedStr,matchedStr); 
    //get the hash 
    int hashIndex = hashCode(key);
 
    //move in array until an empty cell is found or deleted cell
    while(hashArray[hashIndex] != NULL && hashArray[hashIndex]->key != -1) {
       //go to next cell
+      if(strcmp(hashArray[hashIndex]->matchedStr,matchedStr)==0)
+      return;
       ++hashIndex;
 		
       //wrap around the table
@@ -63,6 +51,10 @@ void insert(int key,char* data) {
 }
 
 void delete(struct node* item) {
+   dummyItem = (struct node*) malloc(sizeof(struct node));
+   dummyItem->data = NULL;  
+   dummyItem->key = -1; 
+   dummyItem->matchedStr=NULL;
    int key = item->key;
 
    //get the hash 
@@ -96,7 +88,7 @@ void display() {
    for(i = 0; i<SIZE; i++) {
 	
       if(hashArray[i] != NULL)
-         printf(" \n%d. (%d,%s)\n",i,hashArray[i]->key,hashArray[i]->data);
+         printf(" \n%d. ( %d , %s , %s )\n",i,hashArray[i]->key,hashArray[i]->matchedStr,hashArray[i]->data);
       else
          printf("\n%d. --\n",i);
    }
@@ -113,10 +105,9 @@ int compute(char* str)
 
 }
 
+/*
 int main() {
-   dummyItem = (struct node*) malloc(sizeof(struct node));
-   dummyItem->data = NULL;  
-   dummyItem->key = -1; 
+  
 
    insert(compute("?"),"T_QUESTION");
    insert(compute("("),"T_OPENPAREN");
@@ -130,7 +121,7 @@ int main() {
    insert(compute("echo"),"T_ECHO");
 
    display();
-   /*item = search(37);
+   item = search(37);
 
    if(item != NULL) {
       printf("Element found: %d\n", item->data);
@@ -145,5 +136,8 @@ int main() {
       printf("Element found: %d\n", item->data);
    } else {
       printf("Element not found\n");
-   }*/
+   }
 }
+
+
+*/
