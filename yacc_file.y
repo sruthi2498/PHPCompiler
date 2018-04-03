@@ -3,6 +3,10 @@
         #include "cd_hash.h"
 	void yyerror(const char *);
 	int yylex();
+	char st[100][10];
+	int top=0;
+	extern char *yytext;
+
 %}
 %token START END ID TYPE SEMIC COMMA EQ NUM PLUS MINUS STAR BY OPEN CLOSE PLUS_EQ MINUS_EQ STAR_EQ BY_EQ PLUS_PLUS MINUS_MINUS OPEN_SQ CLOSE_SQ OPEN_B CLOSE_B IF ELSE ELSEIF WHILE FOR CONTINUE BREAK RETURN LT GT LTE GTE EQ_TO NOT_EQ_TO OR AND ECHO DOT DOUBLE SINGLE LETTER STRING
 
@@ -46,18 +50,21 @@ MultipleForcond : cond MFC
 MFC : COMMA cond MFC
 	|
 	;
-echo_stmt 	: ECHO E SEMIC
-			| ECHO ConcatenatedText SEMIC
+echo_stmt 	: ECHO ConcatenatedText SEMIC
 			| ECHO OPEN ConcatenatedText CLOSE SEMIC
 			;
-ConcatenatedText : ConcatenatedText DOT STRING
-				| ConcatenatedText DOT E
+ConcatenatedText : ConcatenatedText dot_text
 				| E	
 				| STRING 
 				;
+dot_text : DOT STRING
+		 | DOT E
+		 ;
+
 cond 		:  expr 
 			| expr logOp expr
 			;
+
 expr 	: relexp 
 		| logexp 
 		;
@@ -75,27 +82,27 @@ relOp  	: LT
 		| NOT_EQ_TO
 		| EQ_TO
 		;
-AssignExpr 	: ID EQ E SEMIC
+AssignExpr 	: ID {push(); printf("yytext is : %s\n ", yytext);} EQ E {genCode_assign();} SEMIC 
 			;
 ForAssignExpr : ID EQ E
 			;
-E		: E PLUS T
-		| E MINUS T 
+E		: E {push();} PLUS T {genCode_temp();}
+		| E {push();} MINUS T {genCode_temp();} 
 		| T
 		; 
-T		: T STAR F 
-		| T BY	F 
+T		: T {push();} STAR F {genCode_temp();} 
+		| T {push();} BY F {genCode_temp();}
 		| F
 		;
 F 		: OPEN E CLOSE	
-		| NUM
-		| ID
+		| NUM {push();}
+		| ID {push();}
 		| UnaryE 
-		| Unary_op
+		| ID {push();} u_op Unary_op
 		;
-Unary_op : ID u_op ID 
-		| ID u_op NUM 
-		| ID u_op OPEN E CLOSE
+Unary_op : ID {push(); genCode_unary();}
+		| NUM {push(); genCode_unary();}
+		| OPEN E CLOSE
 		;
 u_op  	: PLUS_EQ
 		| MINUS_EQ 
@@ -129,3 +136,30 @@ int main(){
 
 	
 }
+
+push(){
+  printf("Current top of stack : %s and pushing %s . Size of stack : %d \n", st[top], yytext, top);
+  strcpy(st[++top],yytext);
+ }
+
+
+genCode_unary() {
+	printf("unary ");
+	printf(" top of stack is %s . Size of stack : %d \n", st[top], top);
+}
+
+genCode_temp() {
+	printf("expression ");
+	printf(" top of stack is %s . Size of stack : %d \n", st[top], top);
+}
+
+genCode_assign() {
+	printf("assignment ");
+	printf(" top of stack is %s . Size of stack : %d \n", st[top], top);
+
+	printf("%s = %s\n",st[top-2],st[top]);
+	top-=2;
+
+
+}
+
