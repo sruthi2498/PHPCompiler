@@ -3,6 +3,7 @@
     #include "cd_hash.h"
     void yyerror(const char *);
 %}
+%option yylineno
 %%
 "/*"([^*]|\*+[^*/])*\*+"/" 		;
 "//".* 		;
